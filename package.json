@@ -1,0 +1,24 @@
+{
+  "name": "web-based-event-scheduling",
+  "version": "1.0.0",
+  "description": "Super System Web Based Event Scheduling",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infoSphere-Innovators/web-based-event-scheduling.git"
+  },
+  "keywords": [],
+  "author": "InfoSphere Innovators",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/infoSphere-Innovators/web-based-event-scheduling/issues"
+  },
+  "homepage": "https://github.com/infoSphere-Innovators/web-based-event-scheduling#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "firebase": "^11.10.0"
+  }
+}

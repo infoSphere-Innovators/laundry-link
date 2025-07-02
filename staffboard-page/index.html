@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="style.css">
+
+	<link rel="icon" type="image/png" href="img/icon.png">
+	<title>Staff Dashboard | CAPS Laundry Shop</title>
+	<style>
+		.modal-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.4);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 999;
+		}
+
+		.modal-box {
+		background: white;
+		padding: 20px;
+		width: 400px;
+		border-radius: 12px;
+		box-shadow: 0 0 15px rgba(0,0,0,0.3);
+		position: relative;
+		}
+
+		.modal-box h3 {
+		margin-bottom: 15px;
+		}
+
+		.modal-box label {
+		display: block;
+		margin-top: 10px;
+		}
+
+		.modal-box input[type="text"],
+		.modal-box input[type="number"],
+		.modal-box input[type="date"] {
+		width: 100%;
+		padding: 8px;
+		margin-top: 5px;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		}
+
+		.modal-box button {
+		margin-top: 15px;
+		padding: 8px 16px;
+		border: none;
+		background: #4CAF50;
+		color: white;
+		border-radius: 6px;
+		cursor: pointer;
+		}
+
+		.modal-box button:hover {
+		background: #45a049;
+		}
+
+		.close-modal {
+		position: absolute;
+		top: 12px;
+		right: 15px;
+		font-size: 20px;
+		cursor: pointer;
+		}
+
+	</style>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i>
+				<img src="img/logo.png" alt="Logo" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;" />
+			</i>
+			<span class="text">CAPS</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="#" id="nav-dashboard">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" id="nav-orders">
+					<i class='bx bxs-shopping-bag-alt'></i>
+					<span class="text">Orders</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Profile</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main id="dashboard-section">
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download' ></i>
+					<span class="text">Download PDF</span>
+				</a>
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3>1020</h3>
+						<p>New Order</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>2834</h3>
+						<p>Visitors</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3>$2543</h3>
+						<p>Total Sales</p>
+					</span>
+				</li>
+			</ul>
+
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Date Order</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status process">Process</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+		<!-- MAIN -->
+		 <main id="orders-section" style="display: none;">
+			<div class="head-title">
+				<div class="left">
+					<h1>Orders</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Orders</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Manage</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download'></i>
+					<span class="text">Download Report</span>
+				</a>
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-truck'></i>
+					<span class="text">
+						<h3>200</h3>
+						<p>Pending Deliveries</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-hourglass-top'></i>
+					<span class="text">
+						<h3>134</h3>
+						<p>Processing</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-check-circle'></i>
+					<span class="text">
+						<h3>980</h3>
+						<p>Completed Orders</p>
+					</span>
+				</li>
+			</ul>
+			
+			<!-- Add more order-related content here -->
+			 <div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-plus' onclick="openModal()"></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Date Order</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status process">Process</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+
+		<main id="inventory-section" style="display: none;">
+			
+		</main>
+		<!-- MODAL OVERLAY -->
+		<div id="orderModal" class="modal-overlay" style="display: none;">
+		<div class="modal-box">
+			<span class="close-modal" onclick="closeModal()">&times;</span>
+
+			<form id="orderForm">
+			<!-- STEP 1 -->
+			<div class="form-step" id="step1">
+				<h3>Step 1: Order Info</h3>
+				<label>Job Order Number:</label>
+				<input type="text" required><br>
+
+				<label>Customer:</label>
+				<input type="text" required><br>
+
+				<label>Date Received:</label>
+				<input type="date" required><br>
+
+				<label>Date Claimed:</label>
+				<input type="date" required><br>
+
+				<button type="button" onclick="goToStep(2)">Next</button>
+			</div>
+
+			<!-- STEP 2 -->
+			<div class="form-step" id="step2" style="display: none;">
+				<h3>Step 2: Service Info</h3>
+				<label>Type of Service:</label>
+				<input type="text" required><br>
+
+				<label>Weight (kg):</label>
+				<input type="number" required><br>
+
+				<label>Notes 1:</label>
+				<input type="text"><br>
+
+				<label>Amount:</label>
+				<input type="number" id="orderAmount" required><br>
+
+				<label>Notes 2:</label>
+				<input type="text"><br>
+
+				<button type="button" onclick="goToStep(1)">Back</button>
+				<button type="button" onclick="goToStep(3)">Add Service</button>
+			</div>
+
+			<!-- STEP 3 -->
+			<div class="form-step" id="step3" style="display: none;">
+				<h3>Step 3: Payment</h3>
+				<label>Payment Date:</label>
+				<input type="date" required><br>
+
+				<label>Mode of Payment:</label><br>
+				<input type="radio" name="payment" value="Cash" required> Cash
+				<input type="radio" name="payment" value="GCash"> GCash<br><br>
+
+				<label>Total Amount:</label>
+				<input type="text" id="totalAmountDisplay" readonly><br>
+
+				<label>Cash Received:</label>
+				<input type="number" id="cashReceived" required oninput="computeChange()"><br>
+
+				<label>Change:</label>
+				<input type="text" id="changeOutput" readonly><br>
+
+				<button type="button" onclick="goToStep(2)">Back</button>
+				<button type="submit">Save & Print</button>
+			</div>
+			</form>
+		</div>
+		</div>
+
+	</section>
+	<!-- CONTENT -->
+	
+	<script>
+		// Modal logic
+		const modal = document.getElementById("orderModal");
+		const steps = document.querySelectorAll(".form-step");
+
+		function openModal() {
+		modal.style.display = "flex";
+		goToStep(1);
+		}
+
+		function closeModal() {
+		modal.style.display = "none";
+		}
+
+		function goToStep(step) {
+		steps.forEach((s, i) => {
+			s.style.display = (i === step - 1) ? "block" : "none";
+		});
+
+		// If going to step 3, update total display
+		if (step === 3) {
+			const amount = document.getElementById("orderAmount").value;
+			document.getElementById("totalAmountDisplay").value = "₱" + amount;
+		}
+		}
+
+		function computeChange() {
+		const amount = parseFloat(document.getElementById("orderAmount").value || 0);
+		const cash = parseFloat(document.getElementById("cashReceived").value || 0);
+		const change = (cash - amount).toFixed(2);
+		document.getElementById("changeOutput").value = change >= 0 ? `₱${change}` : "₱0.00";
+		}
+
+		// Optional form submit handler
+		document.getElementById("orderForm").addEventListener("submit", function(e) {
+		e.preventDefault();
+		alert("Order Saved & Receipt Printed!");
+		closeModal();
+		});
+
+	</script>
+	<script>
+		const navDashboard = document.getElementById("nav-dashboard");
+		const navOrders = document.getElementById("nav-orders");
+		const navInventory = document.getElementById("nav-inventory");
+
+		const dashboardSection = document.getElementById("dashboard-section");
+		const ordersSection = document.getElementById("orders-section");
+		const inventorySection = document.getElementById("inventory-section");
+
+		// Helper to hide all sections
+		function hideAllSections() {
+			dashboardSection.style.display = "none";
+			ordersSection.style.display = "none";
+			inventorySection.style.display = "none";
+		}
+
+		// Helper to set active sidebar tab
+		function setActive(activeLink) {
+			const sidebarLinks = document.querySelectorAll(".side-menu.top li");
+			sidebarLinks.forEach(li => li.classList.remove("active"));
+			activeLink.parentElement.classList.add("active");
+		}
+
+		// Click Events
+		navDashboard.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			dashboardSection.style.display = "block";
+			setActive(this);
+		});
+
+		navOrders.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			ordersSection.style.display = "block";
+			setActive(this);
+		});
+
+		navInventory.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			inventorySection.style.display = "block";
+			setActive(this);
+		});
+	</script>
+	<script src="script.js"></script>
+</body>
+</html>

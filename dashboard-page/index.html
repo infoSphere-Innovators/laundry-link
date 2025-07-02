@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="style.css">
+
+	<link rel="icon" type="image/png" href="img/icon.png">
+	<title>Admin Dashboard | CAPS Laundry Shop</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i>
+				<img src="img/logo.png" alt="Logo" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;" />
+			</i>
+			<span class="text">CAPS</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="#" id="nav-dashboard">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" id="nav-orders">
+					<i class='bx bxs-shopping-bag-alt'></i>
+					<span class="text">Orders</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" id="nav-inventory">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Inventory</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" id="nav-staffs">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Staffs</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="profile">
+				<img src="img/people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main id="dashboard-section">
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download' ></i>
+					<span class="text">Download PDF</span>
+				</a>
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3>1020</h3>
+						<p>New Order</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>2834</h3>
+						<p>Visitors</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3>$2543</h3>
+						<p>Total Sales</p>
+					</span>
+				</li>
+			</ul>
+
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Date Order</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status process">Process</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="todo">
+					<div class="head">
+						<h3>Todos</h3>
+						<i class='bx bx-plus' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<ul class="todo-list">
+						<li class="completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="not-completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="not-completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</main>
+		<!-- MAIN -->
+		 <main id="orders-section" style="display: none;">
+			<div class="head-title">
+				<div class="left">
+					<h1>Orders</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Orders</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Manage</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download'></i>
+					<span class="text">Download Report</span>
+				</a>
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-truck'></i>
+					<span class="text">
+						<h3>200</h3>
+						<p>Pending Deliveries</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-hourglass-top'></i>
+					<span class="text">
+						<h3>134</h3>
+						<p>Processing</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-check-circle'></i>
+					<span class="text">
+						<h3>980</h3>
+						<p>Completed Orders</p>
+					</span>
+				</li>
+			</ul>
+			
+			<!-- Add more order-related content here -->
+			 <div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-plus' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Date Order</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status process">Process</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+
+		<main id="inventory-section" style="display: none;">
+			<div class="head-title">
+				<div class="left">
+					<h1>Inventory</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Inventory</a>
+						</li>
+						<li><i class='bx bx-chevron-right'></i></li>
+						<li>
+							<a class="active" href="#">Stock</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn-download">
+					<i class='bx bxs-cloud-download'></i>
+					<span class="text">Export CSV</span>
+				</a>
+			</div>
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-box'></i>
+					<span class="text">
+						<h3>150</h3>
+						<p>Available Items</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-error'></i>
+					<span class="text">
+						<h3>35</h3>
+						<p>Low Stock</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-package'></i>
+					<span class="text">
+						<h3>20</h3>
+						<p>Out of Stock</p>
+					</span>
+				</li>
+			</ul>
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-plus' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Date Order</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status process">Process</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>
+									<img src="img/people.png">
+									<p>John Doe</p>
+								</td>
+								<td>01-10-2021</td>
+								<td><span class="status completed">Completed</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script>
+		const navDashboard = document.getElementById("nav-dashboard");
+		const navOrders = document.getElementById("nav-orders");
+		const navInventory = document.getElementById("nav-inventory");
+
+		const dashboardSection = document.getElementById("dashboard-section");
+		const ordersSection = document.getElementById("orders-section");
+		const inventorySection = document.getElementById("inventory-section");
+
+		// Helper to hide all sections
+		function hideAllSections() {
+			dashboardSection.style.display = "none";
+			ordersSection.style.display = "none";
+			inventorySection.style.display = "none";
+		}
+
+		// Helper to set active sidebar tab
+		function setActive(activeLink) {
+			const sidebarLinks = document.querySelectorAll(".side-menu.top li");
+			sidebarLinks.forEach(li => li.classList.remove("active"));
+			activeLink.parentElement.classList.add("active");
+		}
+
+		// Click Events
+		navDashboard.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			dashboardSection.style.display = "block";
+			setActive(this);
+		});
+
+		navOrders.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			ordersSection.style.display = "block";
+			setActive(this);
+		});
+
+		navInventory.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			inventorySection.style.display = "block";
+			setActive(this);
+		});
+	</script>
+	<script src="script.js"></script>
+</body>
+</html>
