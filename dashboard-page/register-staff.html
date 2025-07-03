@@ -1,78 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="/dashboard-page/img/icon.png">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Login | CAPS Laundry Services</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register Staff | CAPS Laundry Services</title>
+  <link rel="stylesheet" href="register.css" />
+  <link rel="icon" type="image/png" href="/dashboard-page/img/icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="register.js"></script>
+  <style>
+    .close-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 20px;
+    color: #444;
+    cursor: pointer;
+    z-index: 10;
+    }
+    .close-btn:hover {
+    color: #ff4d4d;
+    }
+  </style>
 </head>
 <body>
-     <div class="container">
-        <div class="box">
-        <!-- Admin Login Section -->
-        <div class="box-login" id="login">
-            <div class="top-header">
-                <h3>Welcome, Admin!</h3>
-                <small>Please enter your valid Admin account to continue.</small>
-            </div>
-            <div class="input-group">
-                <div class="input-field">
-                <input type="text" class="input-box" id="adminusername" required>
-                <label for="adminusername">Admin Username</label>
-                </div>
-                <div class="input-field">
-                <input type="password" class="input-box" id="adminPass" required>
-                <label for="adminPass">Password</label>
-                <!-- eye toggle same as yours -->
-                </div>
-                <div class="input-field">
-                <input type="submit" class="input-submit" value="Login" onclick="adminLogin()">
-                </div>
-            </div>
+  <div class="container">
+    <div class="box">
+      <div class="box-login" id="login">
+        <div class="close-btn" onclick="goBack()" title="Go Back">
+            <i class="fas fa-times"></i>
         </div>
-
-        <!-- Staff Register/Login Section -->
-        <div class="box-register" id="register">
         <div class="top-header">
-            <h3>Welcome, Staff!</h3>
-            <small>Please enter your Staff account to continue.</small>
+          <h3>Register a Staff</h3>
+          <small>Please input credentials to create your account.</small>
         </div>
         <div class="input-group">
-            <div class="input-field">
-            <input type="text" class="input-box" id="staffID" required>
+          <div class="input-field">
+            <input type="text" class="input-box" id="staffID" required />
             <label for="staffID">Staff ID</label>
-            </div>
-            <div class="input-field">
-            <input type="password" class="input-box" id="staffPass" required>
+          </div>
+          <div class="input-field">
+            <input type="text" class="input-box" id="fullName" required />
+            <label for="fullName">Full Name</label>
+          </div>
+          <div class="input-field">
+            <input type="text" class="input-box" id="contact" required />
+            <label for="contact">Contact</label>
+          </div>
+          <div class="input-field">
+            <input type="password" class="input-box" id="staffPass" required />
             <label for="staffPass">Password</label>
-            <!-- eye toggle same as yours -->
-            </div>
-            <div class="forgot">
-                <label>Don't have account?</label>
-                <a href="/register-staff/index.html">Register here</a>
-            </div>
-            <div class="input-field">
-            <input type="submit" class="input-submit" value="Login" onclick="staffLogin()">
-            </div>
+          </div>
+          <div class="input-field">
+            <input type="submit" class="input-submit" value="Register" id="registerBtn" />
+          </div>
         </div>
-        </div>
-
-         <div class="switch">
-            <a href="#" class="login active" onclick="login()">Admin</a>
-            <a href="#" class="register" onclick="register()">Staff</a>
-            <div class="btn-active" id="btn"></div>
-         </div>
-         
-        </div>
-        
-     </div>
-     <script type="module" src="firebaseConfig.js"></script>
-     <script type="module" src="login.js"></script>
-     <script type="module" src="stafflogin.js"></script>
+      </div>
+    </div>
+  </div>
+     <script type="module" src="register.js"></script>
      <script>
         var x = document.getElementById('login');
         var y = document.getElementById('register');
@@ -88,6 +76,11 @@
             y.style.right = "25px";
             z.style.left = "150px";
         }
+
+
+   // View Password codes
+
+         
       
         function myLogPassword(){
 
@@ -159,6 +152,12 @@
             registerTitle.style.opacity = 1;
         }
     </script>
+    <script>
+    function goBack() {
+    window.location.href = "/dashboard-page/index.html#staffs-section";
+    }
+    </script>
+
 
 </body>
 </html>

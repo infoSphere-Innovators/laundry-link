@@ -9,8 +9,249 @@
 	<!-- My CSS -->
 	<link rel="stylesheet" href="style.css">
 
+	<!-- SweetAlert2 CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.30/jspdf.plugin.autotable.min.js"></script>
+
 	<link rel="icon" type="image/png" href="img/icon.png">
 	<title>Admin Dashboard | CAPS Laundry Shop</title>
+	<!-- Add this after your inventory section -->
+	<style>
+		.modal-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0,0,0,0.4);
+			display: none;
+			align-items: center;
+			justify-content: center;
+			z-index: 9999;
+		}
+
+		.modal-box {
+			background: white;
+			padding: 20px;
+			width: 400px;
+			border-radius: 12px;
+			box-shadow: 0 0 15px rgba(0,0,0,0.3);
+			position: relative;
+		}
+
+		.modal-box h3 {
+			margin-bottom: 15px;
+		}
+
+		.modal-box label {
+			display: block;
+			margin-top: 10px;
+		}
+
+		.modal-box input,
+		.modal-box select {
+			width: 100%;
+			padding: 8px;
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+		}
+
+		.modal-box button {
+			margin-top: 15px;
+			padding: 8px 16px;
+			border: none;
+			background: #4CAF50;
+			color: white;
+			border-radius: 6px;
+			cursor: pointer;
+		}
+
+		.modal-box button:hover {
+			background: #45a049;
+		}
+
+		.close-modal {
+			position: absolute;
+			top: 12px;
+			right: 15px;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+		.custom-toast {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			padding: 10px 20px;
+			background: #333;
+			color: #fff;
+			border-radius: 6px;
+			opacity: 0;
+			transition: opacity 0.5s, transform 0.5s;
+			z-index: 10000;
+			transform: translateY(-20px);
+		}
+
+		.custom-toast.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		.custom-toast.success {
+			background: #4CAF50;
+		}
+
+		.custom-toast.error {
+			background: #f44336;
+		}
+		#stock-name-select {
+			display: block;
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+		}
+		.status.completed {
+			background: #4CAF50;
+			color: white;
+			padding: 4px 10px;
+			border-radius: 12px;
+		}
+
+		.status.pending {
+			background: #FFC107;
+			color: black;
+			padding: 4px 10px;
+			border-radius: 12px;
+		}
+	</style>
+	<style>
+		.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+
+  .modal-overlay.show {
+    display: flex;
+  }
+
+  .modal-box {
+    background-color: #fff;
+    padding: 25px;
+    width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    font-family: Arial, sans-serif;
+  }
+
+  .modal-box h3 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .modal-box label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 500;
+    color: #444;
+  }
+
+  .modal-box input,
+  .modal-box select,
+  .modal-box textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  .modal-box fieldset {
+    margin-top: 15px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  .modal-box legend {
+    font-weight: bold;
+    padding: 0 5px;
+    font-size: 14px;
+  }
+
+  .modal-box input[type="radio"] {
+    margin-right: 6px;
+  }
+
+  .modal-box button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .modal-box button:hover {
+    background: #45a049;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .close-modal:hover {
+    color: #444;
+  }
+
+  .hidden {
+    display: none;
+  }
+  .status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-block;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+	</style>
+
 </head>
 <body>
 
@@ -31,27 +272,33 @@
 				</a>
 			</li>
 			<li>
+				<a href="#" id="nav-services">
+					<i class='bx bxs-dollar-circle'></i> <!-- Updated to dollar icon for Rates -->
+					<span class="text">Services</span>
+				</a>
+			</li>
+			<li>
 				<a href="#" id="nav-orders">
-					<i class='bx bxs-shopping-bag-alt'></i>
-					<span class="text">Orders</span>
+				<i class='bx bxs-receipt'></i> <!-- Changed from shopping-bag to receipt -->
+				<span class="text">Orders</span>
 				</a>
 			</li>
 			<li>
 				<a href="#" id="nav-inventory">
-					<i class='bx bxs-doughnut-chart' ></i>
-					<span class="text">Inventory</span>
+				<i class='bx bxs-box'></i> <!-- Changed to box icon -->
+				<span class="text">Inventory</span>
 				</a>
 			</li>
 			<li>
 				<a href="#" id="nav-staffs">
-					<i class='bx bxs-doughnut-chart' ></i>
-					<span class="text">Staffs</span>
+				<i class='bx bxs-user-detail'></i> <!-- Changed to user-detail for staff -->
+				<span class="text">Staffs</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#" class="logout">
+				<a href="#" class="logout" id="logout-btn">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -96,32 +343,21 @@
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download' ></i>
-					<span class="text">Download PDF</span>
-				</a>
 			</div>
 
 			<ul class="box-info">
 				<li>
-					<i class='bx bxs-calendar-check' ></i>
+					<i class='bx bxs-group'></i>
 					<span class="text">
-						<h3>1020</h3>
-						<p>New Order</p>
+					<h3 id="staff-count">0</h3>  <!-- change to staff-count -->
+					<p>Staff</p>
 					</span>
 				</li>
 				<li>
-					<i class='bx bxs-group' ></i>
+					<i class='bx bxs-dollar-circle'></i>
 					<span class="text">
-						<h3>2834</h3>
-						<p>Visitors</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-dollar-circle' ></i>
-					<span class="text">
-						<h3>$2543</h3>
-						<p>Total Sales</p>
+					<h3 id="sales-amount">₱0</h3>
+					<p>Total Sales</p>
 					</span>
 				</li>
 			</ul>
@@ -135,89 +371,134 @@
 					</div>
 					<table>
 						<thead>
-							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
-							</tr>
+						<tr>
+							<th>Order ID</th>
+							<th>Date Received</th>
+							<th>Payment Status</th>
+						</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status process">Process</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
+						<tbody id="recentOrdersTableBody">
+						<!-- JS will populate rows here -->
 						</tbody>
 					</table>
 				</div>
-				<div class="todo">
+				<div class="order">
 					<div class="head">
-						<h3>Todos</h3>
-						<i class='bx bx-plus' ></i>
-						<i class='bx bx-filter' ></i>
+						<h3>Active Staffs</h3>
+						<i class='bx bxs-user-detail' title="Show All Staff" style="cursor: pointer;" onclick="showStaffSection()"></i>
+
 					</div>
-					<ul class="todo-list">
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-					</ul>
+					<table>
+						<thead>
+							<tr>
+								<th>Full Name</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody id="active-staff-table-body">
+							<!-- JS will populate this -->
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</main>
-		<!-- MAIN -->
-		 <main id="orders-section" style="display: none;">
+
+		<!-- MAIN SERVICES SECTION -->
+		<main id="services-section" style="display: none;">
+		<div class="head-title">
+			<div class="left">
+			<h1>Services</h1>
+			<ul class="breadcrumb">
+				<li><a href="#">Services</a></li>
+				<li><i class='bx bx-chevron-right'></i></li>
+				<li><a class="active" href="#">Rates</a></li>
+			</ul>
+			</div>
+			<a href="#" class="btn-download">
+			<i class='bx bxs-cloud-download'></i>
+			<span class="text">Export PDF</span>
+			</a>
+		</div>
+
+		<ul class="box-info" id="services-stats">
+			<li>
+			<i class='bx bxs-dollar-circle'></i>
+			<span class="text">
+				<h3 id="total-services">0</h3>
+				<p>Rates Added</p>
+			</span>
+			</li>
+			<li>
+			<i class='bx bxs-up-arrow-circle'></i>
+			<span class="text">
+				<h3 id="highest-rate">₱0</h3>
+				<p>Highest Rate</p>
+			</span>
+			</li>
+			<li>
+			<i class='bx bxs-down-arrow-circle'></i>
+			<span class="text">
+				<h3 id="lowest-rate">₱0</h3>
+				<p>Lowest Rate</p>
+			</span>
+			</li>
+		</ul>
+
+		<div class="table-data" id="services-table-container">
+			<div class="order">
+			<div class="head">
+				<h3>Service List</h3>
+				<i class='bx bx-edit' id="edit-service-btn" style="cursor:pointer;" title="Edit Service"></i>
+				<i class='bx bx-plus' id="add-service-btn" style="cursor:pointer;" title="Add Service"></i>
+				<i class='bx bx-filter'></i>
+			</div>
+			<table>
+				<thead>
+				<tr>
+					<th></th>
+					<th>ID</th>
+					<th>Service Name</th>
+					<th>Rate</th>
+					<th>Unit</th>
+					<th>Date Added</th>
+				</tr>
+				</thead>
+				<tbody id="services-table-body">
+				<!-- Dynamic rows go here -->
+				</tbody>
+			</table>
+			</div>
+		</div>
+		</main>
+
+
+		<!-- Modal Form for Adding/Editing Service -->
+		<div id="add-service-modal" class="modal-overlay">
+		<div class="modal-box">
+			<span class="close-modal" id="cancel-service-modal">&times;</span>
+			<h3 id="modal-title">Add New Service</h3>
+			<form id="service-form">
+			<input type="hidden" id="service-id" />
+			<label>Service Name</label>
+			<input type="text" id="service-name" required />
+
+			<label>Price (₱)</label>
+			<input type="number" id="service-price" required />
+
+			<label>Unit</label>
+			<select id="service-unit">
+				<option value="per kilo">Per Kilo</option>
+				<option value="per pair">Per Pair (Shoes)</option>
+				<option value="per item">Per Item</option>
+			</select>
+
+			<button type="submit">Save</button>
+			</form>
+		</div>
+		</div>
+
+		<!-- MAIN ORDERS -->
+		<main id="orders-section" style="display: none;">
 			<div class="head-title">
 				<div class="left">
 					<h1>Orders</h1>
@@ -231,7 +512,7 @@
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
+				<a href="#" class="btn-download" id="btn-order-download">
 					<i class='bx bxs-cloud-download'></i>
 					<span class="text">Download Report</span>
 				</a>
@@ -239,92 +520,268 @@
 
 			<ul class="box-info">
 				<li>
-					<i class='bx bxs-truck'></i>
+					<i class='bx bxs-cart'></i>
 					<span class="text">
-						<h3>200</h3>
-						<p>Pending Deliveries</p>
+					<h3 id="totalOrders">0</h3>
+					<p>Total Orders Made</p>
 					</span>
 				</li>
 				<li>
-					<i class='bx bxs-hourglass-top'></i>
+					<i class='bx bx-money'></i>
 					<span class="text">
-						<h3>134</h3>
-						<p>Processing</p>
+					<h3 id="notPaidOrders">0</h3>
+					<p>Not Yet Paid</p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-check-circle'></i>
 					<span class="text">
-						<h3>980</h3>
-						<p>Completed Orders</p>
+					<h3 id="completedOrders">0</h3>
+					<p>Completed Orders</p>
 					</span>
 				</li>
 			</ul>
+
 			
 			<!-- Add more order-related content here -->
-			 <div class="table-data">
+			<div class="table-data">
 				<div class="order">
 					<div class="head">
 						<h3>Recent Orders</h3>
-						<i class='bx bx-search' ></i>
-						<i class='bx bx-plus' ></i>
-						<i class='bx bx-filter' ></i>
+						<i class='bx bx-plus' id="add-order-btn" style="cursor:pointer;" title="Add New Order"></i>
+						<i class='bx bx-edit' id="edit-stock-btn" style="cursor:pointer;" title="Edit Selected Order"></i>
 					</div>
-					<table>
-						<thead>
+					<!-- Scrollable wrapper for the table -->
+					<div style="overflow-x: auto;">
+						<table>
+							<thead>
 							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
+								<th></th> <!-- For checkbox -->
+								<th>Order ID</th>
+								<th>Customer Name</th>
+								<th>Date Received</th>
+								<th>Received By</th>
+								<th>Type of Service</th>
+								<th>Weight (kg)</th>
+								<th>Service Amount (₱)</th>
+								<th>Products</th>
+								<th>Product Total (₱)</th>
+								<th>Total Amount (₱)</th>
+								<th>Payment Status</th>
+								<th>Payment Method</th>
+								<th>Payment Received By</th>
+								<th>Date Claimed</th>
+								<th>Order Published</th>
+								<th>Process Start</th>
+								<th>Process End</th>
+								<th>Note</th>
+								<th>Received by Customer</th>
 							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status process">Process</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="ordersTableBody">
+								<!-- JS will add <td><input type="checkbox" /></td> for each row -->
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</main>
+		<!-- MODALS -->
+		 <div class="modal-overlay hidden" id="orderModal">
+			<div class="modal-box">
+				<span class="close-modal" id="closeModalBtn">&times;</span>
+				<h3>Add New Order</h3>
+				<form id="order-form">
+				<label>Order ID:
+					<input type="text" id="orderIdDisplay" disabled />
+				</label>
 
+				<label>Customer Name:
+					<input type="text" id="customerName" required />
+				</label>
+
+				<label>Date Received:
+					<input type="date" id="dateReceived" required />
+				</label>
+
+				<label>Received By:
+					<input type="text" id="receivedBy" required />
+				</label>
+
+				<label>Type of Service:
+					<select id="service" required></select>
+				</label>
+
+				<label>Weight (kg):
+					<input type="number" id="weight" max="5" min="1" step="0.1" required />
+				</label>
+
+				<label>Service Amount (₱):
+					<input type="number" id="serviceAmount" readonly />
+				</label>
+
+				<label>Product 1:
+					<select id="product1"></select>
+				</label>
+				<label>Product 2 (optional):
+					<select id="product2"></select>
+				</label>
+				<label>Product 3 (optional):
+					<select id="product3"></select>
+				</label>
+
+				<label>Product Total (₱):
+					<input type="number" id="productAmount" readonly />
+				</label>
+
+				<fieldset>
+					<legend>Payment Status:</legend>
+					<label><input type="radio" name="paymentStatus" id="payNow" value="Completed" required> Pay Now</label>
+					<label><input type="radio" name="paymentStatus" id="payLater" value="Not Paid"> Pay Later</label>
+				</fieldset>
+
+				<div id="paymentFields" class="hidden">
+					<fieldset>
+					<legend>Payment Method:</legend>
+					<label><input type="radio" name="paymentMethod" id="gcash" value="GCash"> GCash</label>
+					<label><input type="radio" name="paymentMethod" id="cash" value="Cash" checked> Cash</label>
+					</fieldset>
+
+					<div id="gcashReceivedRow" class="hidden">
+					<label>Received By:
+						<input type="text" id="paymentReceivedBy" placeholder="Enter name of staff" >
+					</label>
+					</div>
+
+					<label>Total Amount (₱):
+					<input type="number" id="totalAmount" readonly />
+					</label>
+
+					<label>Cash Received (₱):
+					<input type="number" id="cashReceived" />
+					</label>
+
+					<label>Customer Change (₱):
+					<input type="number" id="customerChange" readonly />
+					</label>
+				</div>
+
+				<label>Date Claimed:
+					<input type="text" value="Not claimed yet" disabled />
+				</label>
+
+				<label>Order Published By:
+					<input type="text" id="orderPublishedBy" required />
+				</label>
+
+				<button type="submit">Save Order</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Edit Order Modal -->
+		<div class="modal-overlay hidden" id="editOrderModal">
+			<div class="modal-box">
+				<span class="close-modal" id="closeEditModalBtn">&times;</span>
+				<h3>Edit Order</h3>
+				<form id="edit-order-form">
+				<label>Order ID:
+					<input type="text" id="editOrderId" disabled />
+				</label>
+
+				<label>Customer Name:
+					<input type="text" id="editCustomerName" required />
+				</label>
+
+				<label>Date Received:
+					<input type="date" id="editDateReceived" required />
+				</label>
+
+				<label>Received By:
+					<input type="text" id="editReceivedBy" required />
+				</label>
+
+				<label>Type of Service:
+					<input type="text" id="editServiceType" disabled />
+				</label>
+
+				<label>Weight (kg):
+					<input type="number" id="editWeight" max="5" min="1" step="0.1" required />
+				</label>
+
+				<label>Service Amount (₱):
+					<input type="number" id="editServiceAmount" readonly />
+				</label>
+
+				<label>Products:
+					<input type="text" id="editProducts" readonly />
+				</label>
+
+				<label>Product Total (₱):
+					<input type="number" id="editProductAmount" readonly />
+				</label>
+
+				<label>Total Amount (₱):
+					<input type="number" id="editTotalAmount" readonly />
+				</label>
+
+				<label>Payment Status:
+					<select id="editPaymentStatus">
+					<option value="Completed">Completed</option>
+					<option value="Not Paid">Not Paid</option>
+					</select>
+				</label>
+
+				<label>Payment Method:
+					<select id="editPaymentMethod">
+					<option value="GCash">GCash</option>
+					<option value="Cash">Cash</option>
+					</select>
+				</label>
+
+				<label>Payment Received By:
+					<input type="text" id="editPaymentReceivedBy" />
+				</label>
+
+				<label>Cash Received (₱):
+					<input type="number" id="editCashReceived" />
+				</label>
+
+				<label>Customer Change (₱):
+					<input type="number" id="editCustomerChange" readonly />
+				</label>
+
+				<label>Process Start:
+					<input type="datetime-local" id="editProcessStart" />
+				</label>
+
+				<label>Process End:
+					<input type="datetime-local" id="editProcessEnd" />
+				</label>
+
+				<label>Note:
+					<textarea id="editNote"></textarea>
+				</label>
+
+				<label>Date Claimed:
+					<input type="date" id="editDateClaimed" />
+				</label>
+
+				<label>Claimed By:
+					<input type="text" id="editClaimedBy" />
+				</label>
+
+				<label>Order Published By:
+					<input type="text" id="editOrderPublishedBy" />
+				</label>
+
+				<button type="submit">Update Order</button>
+				</form>
+			</div>
+		</div>
+
+
+		<!-- MAIN INVENTORY -->
 		<main id="inventory-section" style="display: none;">
 			<div class="head-title">
 				<div class="left">
@@ -339,115 +796,193 @@
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
+				<a href="#" class="btn-download" id="btn-inventory-download">
 					<i class='bx bxs-cloud-download'></i>
-					<span class="text">Export CSV</span>
+					<span class="text">Export PDF</span>
 				</a>
+
+
 			</div>
 
-			<ul class="box-info">
+			<ul class="box-info" id="inventory-stats">
 				<li>
 					<i class='bx bxs-box'></i>
 					<span class="text">
-						<h3>150</h3>
-						<p>Available Items</p>
+						<h3 id="available-items">0</h3>
+						<p>Available Stocks</p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-error'></i>
 					<span class="text">
-						<h3>35</h3>
-						<p>Low Stock</p>
+						<h3 id="low-stock-count">0</h3>
+						<p>Low Stock: <span id="low-stock-names">-</span></p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-package'></i>
 					<span class="text">
-						<h3>20</h3>
-						<p>Out of Stock</p>
+						<h3 id="total-items">0</h3>
+						<p>Total Stock Types</p>
 					</span>
 				</li>
 			</ul>
-			<div class="table-data">
-				<div class="order">
-					<div class="head">
-						<h3>Recent Orders</h3>
-						<i class='bx bx-search' ></i>
-						<i class='bx bx-plus' ></i>
-						<i class='bx bx-filter' ></i>
-					</div>
-					<table>
-						<thead>
-							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status process">Process</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-						</tbody>
-					</table>
+
+			<div class="table-data" id="inventory-pdf">
+			<div class="order">
+				<div class="head">
+					<h3>Inventory List</h3>
+					<i class='bx bx-plus' id="add-stock-btn" style="cursor:pointer;" title="Add Stock"></i>
+					<i class='bx bx-trash' id="delete-stock-btn" style="cursor:pointer;" title="Delete Selected Stock"></i>
 				</div>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Type</th>
+							<th>Stocks</th>
+							<th>Price (₱)</th>
+							<th>Date Added</th>
+						</tr>
+					</thead>
+					<tbody id="inventory-table-body" >
+						<tr>
+							<td>1</td>
+							<td>Surf Powder</td>
+							<td>Detergent</td>
+							<td>100</td>
+							<td>2025-07-03</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>Downy</td>
+							<td>Fabcon</td>
+							<td>50</td>
+							<td>2025-07-02</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+		</div>
 		</main>
+
+		<!-- Modal Markup -->
+		<div class="modal-overlay hidden" id="stock-modal">
+			<div class="modal-box">
+				<span class="close-modal" id="close-stock-btn">&times;</span>
+				<h3>Add Stock</h3>
+				<label><input type="checkbox" id="is-new-stock" checked> Is this a new stock?</label>
+				<form id="stock-form">
+				<label>ID: <input type="text" id="stock-id" readonly></label>
+				<label>Name: <input type="text" id="stock-name" required></label>
+				<label>Type:
+					<select id="stock-type" required>
+					<option value="">-- Select --</option>
+					<option value="Fabcon">Fabcon</option>
+					<option value="Detergent">Detergent</option>
+					<option value="Powder">Powder</option>
+					</select>
+				</label>
+				<label>Stocks: <input type="number" id="stock-amount" required></label>
+				<label>Price per Unit (₱): <input type="number" id="stock-price" required step="0.01" min="0"></label>
+				<label>Date: <input type="date" id="stock-date" required></label>
+				<button type="submit">Save</button>
+				</form>
+				
+			</div>
+		</div>
+
+
+
+		<!-- MAIN STAFFS -->
+		<main id="staffs-section" style="display: none;">
+		<div class="head-title">
+			<div class="left">
+			<h1>Staffs</h1>
+			<ul class="breadcrumb">
+				<li><a href="#">Staffs</a></li>
+				<li><i class='bx bx-chevron-right'></i></li>
+				<li><a class="active" href="#">Manage</a></li>
+			</ul>
+			</div>
+			<a href="#" class="btn-download" id="btn-staff-download">
+			<i class='bx bxs-cloud-download'></i>
+			<span class="text">Download Staff List</span>
+			</a>
+		</div>
+
+		<ul class="box-info">
+			<li>
+			<i class='bx bxs-user-badge'></i>
+			<span class="text">
+				<h3 id="total-staff">0</h3>
+				<p>Total Staff</p>
+			</span>
+			</li>
+			<li>
+			<i class='bx bxs-user-check'></i>
+			<span class="text">
+				<h3 id="active-staff">0</h3>
+				<p>Active</p>
+			</span>
+			</li>
+			<li>
+			<i class='bx bxs-user-x'></i>
+			<span class="text">
+				<h3 id="inactive-staff">0</h3>
+				<p>Inactive</p>
+			</span>
+			</li>
+		</ul>
+
+		<div class="table-data">
+			<div class="order">
+			<div class="head">
+				<h3>Staff Directory</h3>
+				<i class='bx bx-plus' title="Add Staff" style="cursor: pointer;" onclick="goToAddStaff()"></i>
+				<i class='bx bx-trash' id="delete-staff" style="cursor:pointer;" title="Delete Staff"></i>
+			</div>
+			<table>
+				<thead>
+				<tr>
+					<th></th>
+					<th>Staff ID</th>
+					<th>Full Name</th>
+					<th>Contact</th>
+					<th>Date Registered</th>
+					<th>Status</th>
+				</tr>
+				</thead>
+				<tbody id="staff-table-body">
+				<!-- Staff rows will be inserted here dynamically -->
+				</tbody>
+			</table>
+			</div>
+		</div>
+		</main>
+
 	</section>
 	<!-- CONTENT -->
-	
-
+</script>
 	<script>
 		const navDashboard = document.getElementById("nav-dashboard");
 		const navOrders = document.getElementById("nav-orders");
 		const navInventory = document.getElementById("nav-inventory");
+		const navStaffs = document.getElementById("nav-staffs");
 
 		const dashboardSection = document.getElementById("dashboard-section");
 		const ordersSection = document.getElementById("orders-section");
 		const inventorySection = document.getElementById("inventory-section");
+		const staffsSection = document.getElementById("staffs-section");
 
 		// Helper to hide all sections
 		function hideAllSections() {
 			dashboardSection.style.display = "none";
 			ordersSection.style.display = "none";
 			inventorySection.style.display = "none";
+			staffsSection.style.display = "none"; // add this
 		}
 
 		// Helper to set active sidebar tab
@@ -478,7 +1013,347 @@
 			inventorySection.style.display = "block";
 			setActive(this);
 		});
+
+		navStaffs.addEventListener("click", function(e) {
+			e.preventDefault();
+			hideAllSections();
+			staffsSection.style.display = "block";
+			setActive(this);
+		});
+		// ✅ LOGOUT FUNCTIONALITY
+		const logoutBtn = document.getElementById("logout-btn");
+		logoutBtn.addEventListener("click", function(e) {
+			e.preventDefault();
+			Swal.fire({
+				toast: true,
+				position: 'top-end',
+				icon: 'success',
+				title: 'Logged out successfully',
+				showConfirmButton: false,
+				timer: 1500,
+				timerProgressBar: true,
+				didClose: () => {
+					// Redirect to login page after toast
+					window.location.href = "/login-page/index.html"; // Update this if your login page has a different name
+				}
+			});
+		});
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+	<script>
+		// Example helper functions if you don't have them yet
+		function hideAllSections() {
+		document.querySelectorAll("main").forEach((section) => {
+			section.style.display = "none";
+		});
+		}
+
+		function setActive(navItem) {
+		document.querySelectorAll("nav ul li").forEach((li) => {
+			li.classList.remove("active");
+		});
+		navItem.parentElement.classList.add("active");
+		}
+
+		// Show #services-section when clicked
+		document.getElementById("nav-services").addEventListener("click", (e) => {
+		e.preventDefault();
+		hideAllSections();
+		document.getElementById("services-section").style.display = "block";
+		setActive(e.target.closest("a"));
+		});
+	</script>
+	<script type="module">
+		import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+		import { app } from "./firebaseConfig.js"; // adjust if needed
+
+		const db = getDatabase(app);
+		const activeStaffTableBody = document.getElementById("active-staff-table-body");
+
+		onValue(ref(db, "staffs"), (snapshot) => {
+			activeStaffTableBody.innerHTML = ""; // clear it first
+
+			snapshot.forEach((child) => {
+			const data = child.val();
+			if (data.status === "active") {
+				const row = document.createElement("tr");
+				row.innerHTML = `
+				<td>${data.fullName || "-"}</td>
+				<td>
+					<span class="status completed">Active</span>
+				</td>
+				`;
+				activeStaffTableBody.appendChild(row);
+			}
+			});
+		});
+		</script>
+
+	<script>
+		function goToAddStaff() {
+			window.location.href = "register-staff.html";
+		}
+	</script>
+
+	<script>
+	document.getElementById("edit-stock-btn").addEventListener("click", function () {
+		const modal = document.getElementById("editOrderModal");
+		if (modal) {
+			modal.classList.remove("hidden");
+		}
+	});
+
+	// Also make sure close button works
+	document.getElementById("closeEditModalBtn").addEventListener("click", function () {
+		const modal = document.getElementById("editOrderModal");
+		if (modal) {
+			modal.classList.add("hidden");
+		}
+	});
+	</script>
+	<script type="module">
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+	import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+	import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
+
+	// firebase config
+	const firebaseConfig = {
+		apiKey: "AIzaSyBRCf1vmmQqMg_8O9tCKefWs3P_9Z__T-M",
+		authDomain: "caps-laundry-services.firebaseapp.com",
+		databaseURL: "https://caps-laundry-services-default-rtdb.firebaseio.com",
+		projectId: "caps-laundry-services",
+		storageBucket: "caps-laundry-services.appspot.com",
+		messagingSenderId: "795365295115",
+		appId: "1:795365295115:web:4a269fd2c38cf2d38eb30e"
+	};
+
+	const app = initializeApp(firebaseConfig);
+	const database = getDatabase(app);
+
+	/**
+	 * Load recent orders
+	 */
+	function loadRecentOrders() {
+		const ordersRef = ref(database, "order");
+		onValue(ordersRef, (snapshot) => {
+		const tbody = document.getElementById("recentOrdersTableBody");
+		if (!tbody) return; // guard if element is missing
+		tbody.innerHTML = "";
+		snapshot.forEach((child) => {
+			const order = child.val();
+			const orderKey = child.key; // orderID
+
+			const row = document.createElement("tr");
+
+			const idCell = document.createElement("td");
+			idCell.textContent = orderKey;
+
+			const dateCell = document.createElement("td");
+			dateCell.textContent = order.dateReceived || "N/A";
+
+			const statusCell = document.createElement("td");
+			const statusSpan = document.createElement("span");
+			statusSpan.classList.add("status");
+			if (order.paymentStatus === "Completed") {
+			statusSpan.classList.add("completed");
+			} else if (order.paymentStatus === "Pending" || order.paymentStatus === "Not Paid") {
+			statusSpan.classList.add("pending");
+			} else {
+			statusSpan.classList.add("process");
+			}
+			statusSpan.textContent = order.paymentStatus || "N/A";
+			statusCell.appendChild(statusSpan);
+
+			row.appendChild(idCell);
+			row.appendChild(dateCell);
+			row.appendChild(statusCell);
+
+			tbody.appendChild(row);
+		});
+		});
+	}
+
+	/**
+	 * Update summary counts
+	 */
+	function updateDashboardSummary() {
+		const ordersRef = ref(database, "order");
+		onValue(ordersRef, (snapshot) => {
+		let orderCount = 0;
+		let totalSales = 0;
+
+		snapshot.forEach((child) => {
+			orderCount++;
+			const order = child.val();
+			if (order.paymentStatus === "Completed") {
+			totalSales += Number(order.totalAmount || 0);
+			}
+		});
+
+		document.getElementById("order-count").textContent = orderCount;
+		document.getElementById("sales-amount").textContent = `₱${totalSales.toLocaleString()}`;
+		});
+
+		const staffRef = ref(database, "staffs");
+		onValue(staffRef, (snapshot) => {
+		let staffCount = 0;
+		snapshot.forEach(() => {
+			staffCount++;
+		});
+		document.getElementById("staff-count").textContent = staffCount;
+		});
+	}
+
+	// run on page load
+	loadRecentOrders();
+	updateDashboardSummary();
+
+	</script>
+
+	<script>
+	function closeModal() {
+		document.getElementById("stock-modal").classList.add("hidden");
+	}
+	</script>
+
+
+
+	<script>
+document.querySelector(".btn-download").addEventListener("click", function() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // get the table
+  const table = document.querySelector("#services-table-container table");
+
+  if (!table) {
+    Swal.fire("Error", "No table found to export.", "error");
+    return;
+  }
+
+  // use autotable to export only table
+  doc.autoTable({
+    html: table,
+    startY: 20,
+    headStyles: { fillColor: [52, 58, 64] },
+    styles: { halign: 'center' },
+    didDrawPage: function (data) {
+      doc.text("Services Report", data.settings.margin.left, 10);
+    }
+  });
+
+  doc.save("services-list.pdf");
+});
+</script>
+<script>
+document.getElementById("btn-order-download").addEventListener("click", function(e) {
+  e.preventDefault(); // prevent anchor link
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  const table = document.querySelector("#ordersTableBody").closest("table");
+
+  if (!table) {
+    Swal.fire("Error", "Orders table not found", "error");
+    return;
+  }
+
+  doc.text("Orders Report", 40, 30);
+
+  doc.autoTable({
+    html: table,
+    startY: 50,
+    headStyles: { fillColor: [52, 58, 64] },
+    styles: { fontSize: 8, cellPadding: 2 }
+  });
+
+  doc.save("orders-report.pdf");
+});
+</script>
+<script>
+document.getElementById("btn-inventory-download").addEventListener("click", function(e) {
+  e.preventDefault();
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  doc.text("Inventory Report", 40, 30);
+
+  const table = document.querySelector("#inventory-table-body").closest("table");
+
+  if (!table) {
+    Swal.fire("Error", "Inventory table not found", "error");
+    return;
+  }
+
+  doc.autoTable({
+    html: table,
+    startY: 50,
+    headStyles: { fillColor: [52, 58, 64] },
+    styles: { fontSize: 8, cellPadding: 2 }
+  });
+
+  doc.save("inventory-report.pdf");
+});
+</script>
+<script>
+document.getElementById("btn-staff-download").addEventListener("click", function(e) {
+  e.preventDefault();
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: 'a4'
+  });
+
+  doc.text("Staff Directory", 40, 30);
+
+  const table = document.querySelector("#staff-table-body").closest("table");
+
+  if (!table) {
+    Swal.fire("Error", "Staff table not found", "error");
+    return;
+  }
+
+  doc.autoTable({
+    html: table,
+    startY: 50,
+    headStyles: { fillColor: [52, 58, 64] },
+    styles: { fontSize: 8, cellPadding: 2 }
+  });
+
+  doc.save("staff-directory.pdf");
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const isAdmin = localStorage.getItem("adminLoggedIn");
+  if (isAdmin !== "true") {
+    Swal.fire({
+      icon: "error",
+      title: "Access Denied",
+      text: "You are not logged in as an administrator.",
+      confirmButtonText: "Go to Login"
+    }).then(() => {
+      window.location.href = "../login-page/index.html"; // adjust path if needed
+    });
+  }
+});
+</script>
+	<script type="module" src="dashboard.js"></script>
+	<script type="module" src="services.js"></script>
+	<script type="module" src="inventory.js"></script>
+	<script type="module" src="staff.js"></script>
+	<script type="module" src="order.js"></script>
 	<script src="script.js"></script>
 </body>
 </html>

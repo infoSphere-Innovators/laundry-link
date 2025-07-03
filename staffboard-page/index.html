@@ -12,70 +12,132 @@
 	<link rel="icon" type="image/png" href="img/icon.png">
 	<title>Staff Dashboard | CAPS Laundry Shop</title>
 	<style>
-		.modal-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0,0,0,0.4);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 999;
-		}
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
 
-		.modal-box {
-		background: white;
-		padding: 20px;
-		width: 400px;
-		border-radius: 12px;
-		box-shadow: 0 0 15px rgba(0,0,0,0.3);
-		position: relative;
-		}
+  .modal-overlay.show {
+    display: flex;
+  }
 
-		.modal-box h3 {
-		margin-bottom: 15px;
-		}
+  .modal-box {
+    background-color: #fff;
+    padding: 25px;
+    width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    font-family: Arial, sans-serif;
+  }
 
-		.modal-box label {
-		display: block;
-		margin-top: 10px;
-		}
+  .modal-box h3 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+  }
 
-		.modal-box input[type="text"],
-		.modal-box input[type="number"],
-		.modal-box input[type="date"] {
-		width: 100%;
-		padding: 8px;
-		margin-top: 5px;
-		border: 1px solid #ccc;
-		border-radius: 6px;
-		}
+  .modal-box label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 500;
+    color: #444;
+  }
 
-		.modal-box button {
-		margin-top: 15px;
-		padding: 8px 16px;
-		border: none;
-		background: #4CAF50;
-		color: white;
-		border-radius: 6px;
-		cursor: pointer;
-		}
+  .modal-box input,
+  .modal-box select,
+  .modal-box textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
 
-		.modal-box button:hover {
-		background: #45a049;
-		}
+  .modal-box fieldset {
+    margin-top: 15px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
 
-		.close-modal {
-		position: absolute;
-		top: 12px;
-		right: 15px;
-		font-size: 20px;
-		cursor: pointer;
-		}
+  .modal-box legend {
+    font-weight: bold;
+    padding: 0 5px;
+    font-size: 14px;
+  }
 
-	</style>
+  .modal-box input[type="radio"] {
+    margin-right: 6px;
+  }
+
+  .modal-box button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .modal-box button:hover {
+    background: #45a049;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .close-modal:hover {
+    color: #444;
+  }
+
+  .hidden {
+    display: none;
+  }
+  .status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-block;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+</style>
+
+
 </head>
 <body>
 
@@ -110,11 +172,12 @@
 				</a>
 			</li>
 			<li>
-				<a href="#" class="logout">
-					<i class='bx bxs-log-out-circle' ></i>
+				<a href="#" class="logout" id="logoutBtn">
+					<i class='bx bxs-log-out-circle'></i>
 					<span class="text">Logout</span>
 				</a>
 			</li>
+
 		</ul>
 	</section>
 	<!-- SIDEBAR -->
@@ -137,6 +200,8 @@
 		</nav>
 		<!-- NAVBAR -->
 
+		
+		</div>
 		<!-- MAIN -->
 		<main id="dashboard-section">
 			<div class="head-title">
@@ -152,94 +217,33 @@
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download' ></i>
-					<span class="text">Download PDF</span>
-				</a>
 			</div>
 
-			<ul class="box-info">
-				<li>
-					<i class='bx bxs-calendar-check' ></i>
-					<span class="text">
-						<h3>1020</h3>
-						<p>New Order</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-group' ></i>
-					<span class="text">
-						<h3>2834</h3>
-						<p>Visitors</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-dollar-circle' ></i>
-					<span class="text">
-						<h3>$2543</h3>
-						<p>Total Sales</p>
-					</span>
-				</li>
-			</ul>
-
+			<!-- Staff Order Process Guide -->
 			<div class="table-data">
 				<div class="order">
 					<div class="head">
-						<h3>Recent Orders</h3>
-						<i class='bx bx-search' ></i>
-						<i class='bx bx-filter' ></i>
+						<h3>Order Process Guide</h3>
+						<i class='bx bx-info-circle'></i>
 					</div>
-					<table>
-						<thead>
-							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status process">Process</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-						</tbody>
-					</table>
+					<div style="padding: 1rem; line-height: 1.6;">
+						<ol style="padding-left: 1.5rem;">
+							<li><strong>Step 1: Click the <i class='bx bx-plus'></i> icon</strong> to open the “New Order” form.</li>
+							<li><strong>Step 2: Fill out the customer details</strong> (name, contact, etc.).</li>
+							<li><strong>Step 3: Select a service type</strong> and enter the item weight (kg). The price will auto-calculate.</li>
+							<li><strong>Step 4: (Optional)</strong> Add up to 3 laundry products from inventory to include with the service.</li>
+							<li><strong>Step 5: Choose a payment option:</strong>
+								<ul style="list-style: disc; padding-left: 1.5rem;">
+									<li><strong>Pay Now</strong>: Enter amount paid (GCash or Cash) and compute change.</li>
+									<li><strong>Pay Later</strong>: Save the order without payment info.</li>
+								</ul>
+							</li>
+							<li><strong>Step 6: Save the order.</strong> It will appear in the Orders section for tracking.</li>
+							<li><strong>Step 7: Use the <i class='bx bx-edit'></i> icon</strong> to update or mark an order as Completed when it’s claimed.</li>
+							<li><strong>Step 8: Make sure to log who received and processed the order</strong> for accountability.</li>
+						</ol>
+						<p style="margin-top: 1rem;"><strong>Note:</strong> Only Admins can delete orders. Staff can edit their own handled orders only.</p>
+					</div>
 				</div>
 			</div>
 		</main>
@@ -258,264 +262,691 @@
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download'></i>
-					<span class="text">Download Report</span>
-				</a>
 			</div>
 
 			<ul class="box-info">
 				<li>
-					<i class='bx bxs-truck'></i>
+					<i class='bx bxs-cart'></i>
 					<span class="text">
-						<h3>200</h3>
-						<p>Pending Deliveries</p>
+					<h3 id="totalOrders">0</h3>
+					<p>Total Orders Made</p>
 					</span>
 				</li>
 				<li>
-					<i class='bx bxs-hourglass-top'></i>
+					<i class='bx bx-money'></i>
 					<span class="text">
-						<h3>134</h3>
-						<p>Processing</p>
+					<h3 id="notPaidOrders">0</h3>
+					<p>Not Yet Paid</p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-check-circle'></i>
 					<span class="text">
-						<h3>980</h3>
-						<p>Completed Orders</p>
+					<h3 id="completedOrders">0</h3>
+					<p>Completed Orders</p>
 					</span>
 				</li>
 			</ul>
+
 			
 			<!-- Add more order-related content here -->
-			 <div class="table-data">
+			<div class="table-data">
 				<div class="order">
 					<div class="head">
 						<h3>Recent Orders</h3>
-						<i class='bx bx-search' ></i>
-						<i class='bx bx-plus' onclick="openModal()"></i>
-						<i class='bx bx-filter' ></i>
+						<i class='bx bx-plus' id="add-stock-btn" style="cursor:pointer;" title="Add New Order"></i>
+						<i class='bx bx-edit' id="edit-stock-btn" style="cursor:pointer;" title="Edit Selected Order"></i>
 					</div>
-					<table>
-						<thead>
+					<!-- Scrollable wrapper for the table -->
+					<div style="overflow-x: auto;">
+						<table>
+							<thead>
 							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
+								<th></th> <!-- For checkbox -->
+								<th>Order ID</th>
+								<th>Customer Name</th>
+								<th>Date Received</th>
+								<th>Received By</th>
+								<th>Type of Service</th>
+								<th>Weight (kg)</th>
+								<th>Service Amount (₱)</th>
+								<th>Products</th>
+								<th>Product Total (₱)</th>
+								<th>Total Amount (₱)</th>
+								<th>Payment Status</th>
+								<th>Payment Method</th>
+								<th>Payment Received By</th>
+								<th>Date Claimed</th>
+								<th>Order Published</th>
+								<th>Process Start</th>
+								<th>Process End</th>
+								<th>Note</th>
+								<th>Received by Customer</th>
 							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status process">Process</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-						</tbody>
-					</table>
+							</thead>
+							<tbody id="ordersTableBody">
+								<!-- JS will add <td><input type="checkbox" /></td> for each row -->
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</main>
 
-		<main id="inventory-section" style="display: none;">
-			
-		</main>
-		<!-- MODAL OVERLAY -->
-		<div id="orderModal" class="modal-overlay" style="display: none;">
+		<!-- Order Modal -->
+		<div class="modal-overlay hidden" id="orderModal">
 		<div class="modal-box">
-			<span class="close-modal" onclick="closeModal()">&times;</span>
+			<span class="close-modal" id="closeModalBtn">&times;</span>
+			<h3>Add New Order</h3>
+			<form id="order-form">
+			<label>Order ID:
+				<input type="text" id="orderIdDisplay" disabled />
+			</label>
 
-			<form id="orderForm">
-			<!-- STEP 1 -->
-			<div class="form-step" id="step1">
-				<h3>Step 1: Order Info</h3>
-				<label>Job Order Number:</label>
-				<input type="text" required><br>
+			<label>Customer Name:
+				<input type="text" id="customerName" required />
+			</label>
 
-				<label>Customer:</label>
-				<input type="text" required><br>
+			<label>Date Received:
+				<input type="date" id="dateReceived" required />
+			</label>
 
-				<label>Date Received:</label>
-				<input type="date" required><br>
+			<label>Received By:
+				<input type="text" id="receivedBy" required />
+			</label>
 
-				<label>Date Claimed:</label>
-				<input type="date" required><br>
+			<label>Type of Service:
+				<select id="service" required></select>
+			</label>
 
-				<button type="button" onclick="goToStep(2)">Next</button>
+			<label>Weight (kg):
+				<input type="number" id="weight" max="5" min="1" step="0.1" required />
+			</label>
+
+			<label>Service Amount (₱):
+				<input type="number" id="serviceAmount" readonly />
+			</label>
+
+			<label>Product 1:
+				<select id="product1"></select>
+			</label>
+			<label>Product 2 (optional):
+				<select id="product2"></select>
+			</label>
+			<label>Product 3 (optional):
+				<select id="product3"></select>
+			</label>
+
+			<label>Product Total (₱):
+				<input type="number" id="productAmount" readonly />
+			</label>
+
+			<fieldset>
+				<legend>Payment Status:</legend>
+				<label><input type="radio" name="paymentStatus" id="payNow" value="Completed" required> Pay Now</label>
+				<label><input type="radio" name="paymentStatus" id="payLater" value="Not Paid"> Pay Later</label>
+			</fieldset>
+
+			<div id="paymentFields" class="hidden">
+				<fieldset>
+				<legend>Payment Method:</legend>
+				<label><input type="radio" name="paymentMethod" id="gcash" value="GCash"> GCash</label>
+				<label><input type="radio" name="paymentMethod" id="cash" value="Cash" checked> Cash</label>
+				</fieldset>
+
+				<div id="gcashReceivedRow" class="hidden">
+				<label>Received By:
+					<input type="text" id="paymentReceivedBy" placeholder="Enter name of staff" >
+				</label>
+				</div>
+
+				<label>Total Amount (₱):
+				<input type="number" id="totalAmount" readonly />
+				</label>
+
+				<label>Cash Received (₱):
+				<input type="number" id="cashReceived" />
+				</label>
+
+				<label>Customer Change (₱):
+				<input type="number" id="customerChange" readonly />
+				</label>
 			</div>
 
-			<!-- STEP 2 -->
-			<div class="form-step" id="step2" style="display: none;">
-				<h3>Step 2: Service Info</h3>
-				<label>Type of Service:</label>
-				<input type="text" required><br>
+			<label>Date Claimed:
+				<input type="text" value="Not claimed yet" disabled />
+			</label>
 
-				<label>Weight (kg):</label>
-				<input type="number" required><br>
+			<label>Order Published By:
+				<input type="text" id="orderPublishedBy" required />
+			</label>
 
-				<label>Notes 1:</label>
-				<input type="text"><br>
-
-				<label>Amount:</label>
-				<input type="number" id="orderAmount" required><br>
-
-				<label>Notes 2:</label>
-				<input type="text"><br>
-
-				<button type="button" onclick="goToStep(1)">Back</button>
-				<button type="button" onclick="goToStep(3)">Add Service</button>
-			</div>
-
-			<!-- STEP 3 -->
-			<div class="form-step" id="step3" style="display: none;">
-				<h3>Step 3: Payment</h3>
-				<label>Payment Date:</label>
-				<input type="date" required><br>
-
-				<label>Mode of Payment:</label><br>
-				<input type="radio" name="payment" value="Cash" required> Cash
-				<input type="radio" name="payment" value="GCash"> GCash<br><br>
-
-				<label>Total Amount:</label>
-				<input type="text" id="totalAmountDisplay" readonly><br>
-
-				<label>Cash Received:</label>
-				<input type="number" id="cashReceived" required oninput="computeChange()"><br>
-
-				<label>Change:</label>
-				<input type="text" id="changeOutput" readonly><br>
-
-				<button type="button" onclick="goToStep(2)">Back</button>
-				<button type="submit">Save & Print</button>
-			</div>
+			<button type="submit">Save Order</button>
 			</form>
 		</div>
 		</div>
 
-	</section>
+		<!-- Edit Order Modal -->
+		<div class="modal-overlay hidden" id="editOrderModal">
+		<div class="modal-box">
+			<span class="close-modal" id="closeEditModalBtn">&times;</span>
+			<h3>Edit Order</h3>
+			<form id="edit-order-form">
+			<label>Order ID:
+				<input type="text" id="editOrderId" disabled />
+			</label>
+
+			<label>Customer Name:
+				<input type="text" id="editCustomerName" required />
+			</label>
+
+			<label>Date Received:
+				<input type="date" id="editDateReceived" required />
+			</label>
+
+			<label>Received By:
+				<input type="text" id="editReceivedBy" required />
+			</label>
+
+			<label>Type of Service:
+				<input type="text" id="editServiceType" disabled />
+			</label>
+
+			<label>Weight (kg):
+				<input type="number" id="editWeight" max="5" min="1" step="0.1" required />
+			</label>
+
+			<label>Service Amount (₱):
+				<input type="number" id="editServiceAmount" readonly />
+			</label>
+
+			<label>Products:
+				<input type="text" id="editProducts" readonly />
+			</label>
+
+			<label>Product Total (₱):
+				<input type="number" id="editProductAmount" readonly />
+			</label>
+
+			<label>Total Amount (₱):
+				<input type="number" id="editTotalAmount" readonly />
+			</label>
+
+			<label>Payment Status:
+				<select id="editPaymentStatus">
+				<option value="Completed">Completed</option>
+				<option value="Not Paid">Not Paid</option>
+				</select>
+			</label>
+
+			<label>Payment Method:
+				<select id="editPaymentMethod">
+				<option value="GCash">GCash</option>
+				<option value="Cash">Cash</option>
+				</select>
+			</label>
+
+			<label>Payment Received By:
+				<input type="text" id="editPaymentReceivedBy" />
+			</label>
+
+			<label>Cash Received (₱):
+				<input type="number" id="editCashReceived" />
+			</label>
+
+			<label>Customer Change (₱):
+				<input type="number" id="editCustomerChange" readonly />
+			</label>
+
+			<label>Process Start:
+				<input type="datetime-local" id="editProcessStart" />
+			</label>
+
+			<label>Process End:
+				<input type="datetime-local" id="editProcessEnd" />
+			</label>
+
+			<label>Note:
+				<textarea id="editNote"></textarea>
+			</label>
+
+			<label>Date Claimed:
+				<input type="date" id="editDateClaimed" />
+			</label>
+
+			<label>Claimed By:
+				<input type="text" id="editClaimedBy" />
+			</label>
+
+			<label>Order Published By:
+				<input type="text" id="editOrderPublishedBy" />
+			</label>
+
+			<button type="submit">Update Order</button>
+			</form>
+		</div>
+		</div>
+
+		<!-- Profile Modal -->
+		<div id="profileModal" class="modal-overlay" style="display: none;">
+		<div class="modal-box">
+			<span class="close-modal" onclick="closeProfileModal()">&times;</span>
+			<h3>Staff Profile</h3>
+
+			<label for="profileID">Staff ID:</label>
+			<input type="text" id="profileID" readonly>
+
+			<label for="profileName">Full Name:</label>
+			<input type="text" id="profileName" readonly>
+
+			<label for="profileContact">Contact Number:</label>
+			<input type="text" id="profileContact" readonly>
+
+			<label for="profileStatus">Status:</label>
+			<input type="text" id="profileStatus" readonly>
+
+			<label for="profileDate">Registered Date:</label>
+			<input type="text" id="profileDate" readonly>
+		</div>
+		</div>
+			</section>
 	<!-- CONTENT -->
+	 
+
 	
-	<script>
-		// Modal logic
-		const modal = document.getElementById("orderModal");
-		const steps = document.querySelectorAll(".form-step");
+  <script type="module">
+	import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
-		function openModal() {
-		modal.style.display = "flex";
-		goToStep(1);
-		}
-
-		function closeModal() {
-		modal.style.display = "none";
-		}
-
-		function goToStep(step) {
-		steps.forEach((s, i) => {
-			s.style.display = (i === step - 1) ? "block" : "none";
-		});
-
-		// If going to step 3, update total display
-		if (step === 3) {
-			const amount = document.getElementById("orderAmount").value;
-			document.getElementById("totalAmountDisplay").value = "₱" + amount;
-		}
-		}
-
-		function computeChange() {
-		const amount = parseFloat(document.getElementById("orderAmount").value || 0);
-		const cash = parseFloat(document.getElementById("cashReceived").value || 0);
-		const change = (cash - amount).toFixed(2);
-		document.getElementById("changeOutput").value = change >= 0 ? `₱${change}` : "₱0.00";
-		}
-
-		// Optional form submit handler
-		document.getElementById("orderForm").addEventListener("submit", function(e) {
+	document.getElementById("logoutBtn").addEventListener("click", (e) => {
 		e.preventDefault();
-		alert("Order Saved & Receipt Printed!");
-		closeModal();
-		});
 
+		// Clear local storage to log the user out
+		localStorage.removeItem("userID");
+		localStorage.removeItem("userType");
+
+		// Show toast alert
+		Swal.fire({
+			icon: 'success',
+			title: 'Logged out',
+			text: 'You have been successfully logged out.',
+			timer: 1500,
+			timerProgressBar: true,
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false
+		}).then(() => {
+			// Redirect to login page after toast
+			window.location.href = "/login-page/index.html";
+		});
+	});
 	</script>
-	<script>
-		const navDashboard = document.getElementById("nav-dashboard");
-		const navOrders = document.getElementById("nav-orders");
-		const navInventory = document.getElementById("nav-inventory");
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, get, onValue, runTransaction, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
-		const dashboardSection = document.getElementById("dashboard-section");
-		const ordersSection = document.getElementById("orders-section");
-		const inventorySection = document.getElementById("inventory-section");
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRCf1vmmQqMg_8O9tCKefWs3P_9Z__T-M",
+    authDomain: "caps-laundry-services.firebaseapp.com",
+    databaseURL: "https://caps-laundry-services-default-rtdb.firebaseio.com",
+    projectId: "caps-laundry-services",
+    storageBucket: "caps-laundry-services.appspot.com",
+    messagingSenderId: "795365295115",
+    appId: "1:795365295115:web:4a269fd2c38cf2d38eb30e"
+  };
 
-		// Helper to hide all sections
-		function hideAllSections() {
-			dashboardSection.style.display = "none";
-			ordersSection.style.display = "none";
-			inventorySection.style.display = "none";
-		}
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-		// Helper to set active sidebar tab
-		function setActive(activeLink) {
-			const sidebarLinks = document.querySelectorAll(".side-menu.top li");
-			sidebarLinks.forEach(li => li.classList.remove("active"));
-			activeLink.parentElement.classList.add("active");
-		}
+  const addOrderBtn = document.getElementById("add-stock-btn");
+  const modal = document.getElementById("orderModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const ordersTableBody = document.getElementById("ordersTableBody");
 
-		// Click Events
-		navDashboard.addEventListener("click", function(e) {
-			e.preventDefault();
-			hideAllSections();
-			dashboardSection.style.display = "block";
-			setActive(this);
-		});
+  addOrderBtn.addEventListener("click", async () => {
+    modal.style.display = "flex";
+    document.getElementById("order-form").reset();
+    document.getElementById("paymentFields").style.display = "none";
+    document.getElementById("gcashReceivedRow").style.display = "none";
 
-		navOrders.addEventListener("click", function(e) {
-			e.preventDefault();
-			hideAllSections();
-			ordersSection.style.display = "block";
-			setActive(this);
-		});
+    const counterRef = ref(db, 'orderCounter');
+    const snapshot = await get(counterRef);
+    let orderNumber = 1;
+    if (snapshot.exists()) {
+      orderNumber = snapshot.val();
+      const ordersRef = ref(db, 'order');
+      const ordersSnapshot = await get(ordersRef);
+      if (ordersSnapshot.exists()) {
+        const ids = Object.values(ordersSnapshot.val()).map(o => o.orderId);
+        if (ids.length > 0) {
+          const max = Math.max(...ids);
+          orderNumber = max + 1;
+        }
+      }
+    }
+    document.getElementById("orderIdDisplay").value = orderNumber;
+  });
 
-		navInventory.addEventListener("click", function(e) {
-			e.preventDefault();
-			hideAllSections();
-			inventorySection.style.display = "block";
-			setActive(this);
-		});
-	</script>
+  closeModalBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.getElementById("payNow").addEventListener("change", () => {
+    document.getElementById("paymentFields").style.display = "block";
+  });
+
+  document.getElementById("payLater").addEventListener("change", () => {
+    document.getElementById("paymentFields").style.display = "none";
+    document.getElementById("gcashReceivedRow").style.display = "none";
+  });
+
+  document.getElementById("gcash").addEventListener("change", () => {
+    document.getElementById("gcashReceivedRow").style.display = "block";
+  });
+
+  document.getElementById("cash").addEventListener("change", () => {
+    document.getElementById("gcashReceivedRow").style.display = "none";
+  });
+
+  const serviceSelect = document.getElementById("service");
+  onValue(ref(db, 'services'), snapshot => {
+    serviceSelect.innerHTML = '<option value="">Select Service</option>';
+    snapshot.forEach(childSnap => {
+      const service = childSnap.val();
+      const option = document.createElement("option");
+      option.value = JSON.stringify(service);
+      option.textContent = `${service.name} (₱${service.price})`;
+      serviceSelect.appendChild(option);
+    });
+  });
+
+  serviceSelect.addEventListener("change", () => {
+    const selected = JSON.parse(serviceSelect.value);
+    document.getElementById("serviceAmount").value = selected.price || 0;
+    calculateProductTotal();
+  });
+
+  const productSelects = ["product1", "product2", "product3"];
+  productSelects.forEach(id => {
+    const select = document.getElementById(id);
+    onValue(ref(db, 'inventory'), snapshot => {
+      select.innerHTML = '<option value="">None</option>';
+      snapshot.forEach(childSnap => {
+        const product = childSnap.val();
+        const option = document.createElement("option");
+        option.value = JSON.stringify(product);
+        option.textContent = `${product.name} (${product.type}) - ₱${product.price}`;
+        select.appendChild(option);
+      });
+    });
+  });
+
+  function calculateProductTotal() {
+    let total = 0;
+    productSelects.forEach(id => {
+      const val = document.getElementById(id).value;
+      if (val) total += JSON.parse(val).price || 0;
+    });
+    const serviceAmount = parseFloat(document.getElementById("serviceAmount").value || 0);
+    document.getElementById("productAmount").value = total;
+    document.getElementById("totalAmount").value = total + serviceAmount;
+  }
+
+  productSelects.forEach(id => {
+    document.getElementById(id).addEventListener("change", calculateProductTotal);
+  });
+
+  document.getElementById("cashReceived").addEventListener("input", () => {
+    const cash = parseFloat(document.getElementById("cashReceived").value || 0);
+    const total = parseFloat(document.getElementById("totalAmount").value || 0);
+    document.getElementById("customerChange").value = cash - total;
+  });
+
+  document.getElementById("order-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const orderId = parseInt(document.getElementById("orderIdDisplay").value);
+    const ordersRef = ref(db, 'order/' + orderId);
+
+    const orderData = {
+      orderId,
+      customerName: document.getElementById("customerName").value,
+      dateReceived: document.getElementById("dateReceived").value,
+      receivedBy: document.getElementById("receivedBy").value,
+      typeOfService: JSON.parse(document.getElementById("service").value).name,
+      weight: document.getElementById("weight").value,
+      serviceAmount: document.getElementById("serviceAmount").value,
+      product1: JSON.parse(document.getElementById("product1").value || null)?.name || "None",
+      product2: JSON.parse(document.getElementById("product2").value || null)?.name || "None",
+      product3: JSON.parse(document.getElementById("product3").value || null)?.name || "None",
+      productAmount: document.getElementById("productAmount").value,
+      totalAmount: document.getElementById("totalAmount").value,
+      paymentStatus: document.querySelector('input[name="paymentStatus"]:checked').value,
+      paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value || "N/A",
+      paymentReceivedBy: document.getElementById("paymentReceivedBy").value || "N/A",
+      cashReceived: document.getElementById("cashReceived").value,
+      customerChange: document.getElementById("customerChange").value,
+      dateClaimed: document.getElementById("dateClaimed")?.value || "Not claimed yet",
+      orderPublishedBy: document.getElementById("orderPublishedBy").value,
+      processStart: document.getElementById("processStart")?.value || "",
+      processEnd: document.getElementById("processEnd")?.value || "",
+      note: document.getElementById("note")?.value || "",
+      claimedBy: document.getElementById("claimedBy")?.value || ""
+    };
+
+    await set(ordersRef, orderData);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Order Saved',
+      text: 'Order has been successfully saved.',
+      timer: 1500,
+      showConfirmButton: false,
+      toast: true,
+      position: 'top-end'
+    });
+
+    modal.style.display = "none";
+  });
+
+  // Load orders into table
+  function loadOrders() {
+  const ordersRef = ref(db, 'order');
+  onValue(ordersRef, (snapshot) => {
+    ordersTableBody.innerHTML = "";
+
+    // Initialize counters
+    let totalOrders = 0;
+    let completedOrders = 0;
+    let notPaidOrders = 0;
+
+    snapshot.forEach(child => {
+      const order = child.val();
+      totalOrders++;
+
+      if (order.paymentStatus === "Completed") {
+        completedOrders++;
+      } else if (order.paymentStatus === "Not Paid") {
+        notPaidOrders++;
+      }
+
+      const row = document.createElement("tr");
+      const productList = [order.product1, order.product2, order.product3].filter(p => p && p !== "None").join(", ");
+      const statusClass = order.paymentStatus === 'Completed' ? 'completed' : 'pending';
+
+      row.innerHTML = `
+        <td><input type="checkbox" class="rowCheckbox" /></td>
+        <td>${order.orderId || "-"}</td>
+        <td>${order.customerName || "-"}</td>
+        <td>${order.dateReceived || "-"}</td>
+        <td>${order.receivedBy || "-"}</td>
+        <td>${order.typeOfService || "-"}</td>
+        <td>${order.weight || "-"}</td>
+        <td>₱${order.serviceAmount || "0"}</td>
+        <td>${productList || "None"}</td>
+        <td>₱${order.productAmount || "0"}</td>
+        <td>₱${order.totalAmount || "0"}</td>
+        <td><span class="status ${statusClass}">${order.paymentStatus}</span></td>
+        <td>${order.paymentMethod || "N/A"}</td>
+        <td>${order.paymentReceivedBy || "-"}</td>
+        <td>${order.dateClaimed || "-"}</td>
+        <td>${order.orderPublishedBy || "-"}</td>
+        <td>${order.processStart || "-"}</td>
+        <td>${order.processEnd || "-"}</td>
+        <td>${order.note || "-"}</td>
+        <td>${order.claimedBy || "-"}</td>
+      `;
+      ordersTableBody.appendChild(row);
+    });
+
+    // ✅ Update dashboard counters
+    document.getElementById("totalOrders").textContent = totalOrders;
+    document.getElementById("notPaidOrders").textContent = notPaidOrders;
+    document.getElementById("completedOrders").textContent = completedOrders;
+  });
+}
+
+
+
+  loadOrders();
+
+  // Show Edit Modal
+  const editBtn = document.getElementById("edit-stock-btn");
+  const editModal = document.getElementById("editOrderModal");
+  const closeEditModalBtn = document.getElementById("closeEditModalBtn");
+
+  editBtn.addEventListener("click", async () => {
+    const selectedCheckbox = document.querySelector(".rowCheckbox:checked");
+    if (!selectedCheckbox) {
+      return Swal.fire({
+        icon: 'warning',
+        title: 'No selection',
+        text: 'Please select an order to edit.',
+        toast: true,
+        timer: 1500,
+        showConfirmButton: false,
+        position: 'top-end'
+      });
+    }
+
+    const selectedRow = selectedCheckbox.closest("tr");
+    const orderId = parseInt(selectedRow.cells[1].textContent);
+    const snapshot = await get(ref(db, 'order/' + orderId));
+    if (!snapshot.exists()) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Order not found',
+        text: 'The selected order could not be found in the database.'
+      });
+    }
+
+    const order = snapshot.val();
+
+    // Fill in modal fields
+    document.getElementById("editOrderId").value = order.orderId;
+    document.getElementById("editCustomerName").value = order.customerName;
+    document.getElementById("editDateReceived").value = order.dateReceived;
+    document.getElementById("editReceivedBy").value = order.receivedBy;
+    document.getElementById("editServiceType").value = order.typeOfService;
+    document.getElementById("editWeight").value = order.weight;
+    document.getElementById("editServiceAmount").value = order.serviceAmount;
+    document.getElementById("editProducts").value = [order.product1, order.product2, order.product3].filter(p => p && p !== "None").join(", ");
+    document.getElementById("editProductAmount").value = order.productAmount;
+    document.getElementById("editTotalAmount").value = order.totalAmount;
+    document.getElementById("editPaymentStatus").value = order.paymentStatus;
+    document.getElementById("editPaymentMethod").value = order.paymentMethod;
+    document.getElementById("editPaymentReceivedBy").value = order.paymentReceivedBy || "";
+    document.getElementById("editCashReceived").value = order.cashReceived || "";
+    document.getElementById("editCustomerChange").value = order.customerChange || "";
+    document.getElementById("editProcessStart").value = order.processStart || "";
+    document.getElementById("editProcessEnd").value = order.processEnd || "";
+    document.getElementById("editNote").value = order.note || "";
+    document.getElementById("editDateClaimed").value = order.dateClaimed !== "Not claimed yet" ? order.dateClaimed : "";
+    document.getElementById("editClaimedBy").value = order.claimedBy || "";
+    document.getElementById("editOrderPublishedBy").value = order.orderPublishedBy;
+
+    editModal.classList.add("show");
+  });
+
+  closeEditModalBtn.addEventListener("click", () => {
+    editModal.classList.remove("show");
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === editModal) {
+      editModal.classList.remove("show");
+    }
+  });
+
+  // Handle update submission
+  document.getElementById("edit-order-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const orderId = parseInt(document.getElementById("editOrderId").value);
+  const updatedOrder = {
+    orderId,
+    customerName: document.getElementById("editCustomerName").value,
+    dateReceived: document.getElementById("editDateReceived").value,
+    receivedBy: document.getElementById("editReceivedBy").value,
+    typeOfService: document.getElementById("editServiceType").value,
+    weight: document.getElementById("editWeight").value,
+    serviceAmount: document.getElementById("editServiceAmount").value,
+    product1: document.getElementById("editProducts").value.split(",")[0]?.trim() || "None",
+    product2: document.getElementById("editProducts").value.split(",")[1]?.trim() || "None",
+    product3: document.getElementById("editProducts").value.split(",")[2]?.trim() || "None",
+    productAmount: document.getElementById("editProductAmount").value,
+    totalAmount: document.getElementById("editTotalAmount").value,
+    paymentStatus: document.getElementById("editPaymentStatus").value,
+    paymentMethod: document.getElementById("editPaymentMethod").value,
+    paymentReceivedBy: document.getElementById("editPaymentReceivedBy").value,
+    cashReceived: document.getElementById("editCashReceived").value,
+    customerChange: document.getElementById("editCustomerChange").value,
+    processStart: document.getElementById("editProcessStart").value,
+    processEnd: document.getElementById("editProcessEnd").value,
+    note: document.getElementById("editNote").value,
+    dateClaimed: document.getElementById("editDateClaimed").value || "Not claimed yet",
+    claimedBy: document.getElementById("editClaimedBy").value,
+    orderPublishedBy: document.getElementById("editOrderPublishedBy").value
+  };
+
+  try {
+    await update(ref(db, 'order/' + orderId), updatedOrder);
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Order Updated',
+      text: 'Order has been successfully updated.',
+      toast: true,
+      timer: 1500,
+      position: 'top-end',
+      showConfirmButton: false
+    });
+
+    editModal.classList.remove("show");
+
+    loadOrders(); // ✅ Refresh table to reflect new values
+
+  } catch (err) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Update Failed',
+      text: 'An error occurred while updating the order.'
+    });
+  }
+});
+</script>
+
+
+
+	<script type="module" src="dashboard.js"></script>
+	<script type="module" src="order.js"></script>
 	<script src="script.js"></script>
+	
 </body>
 </html>
